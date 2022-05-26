@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid4 } from "uuid";
+import { Cart } from "./cart.entity";
 
 @Entity("users")
 export class User {
@@ -17,6 +18,9 @@ export class User {
 
   @Column({ type: "boolean", default: false, name: "is_admin" })
   isAdmin: boolean;
+
+  @OneToMany(() => Cart, (cart) => cart.user)
+  carts: Cart[];
 
   constructor() {
     if (!this.id) {
