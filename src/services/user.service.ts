@@ -5,9 +5,9 @@ import { userRepo } from "../repositories";
 import { userUtil } from "../utils";
 
 class UserService {
-  create = async ({ body }: Request): Promise<Partial<User>> => {
-    body.password = await hash(body.password, 10);
-    const newUser = await userRepo.save(body);
+  create = async ({ validated }: Request): Promise<Partial<User>> => {
+    validated.password = await hash(validated.password, 10);
+    const newUser = await userRepo.save(validated);
 
     const newUserWop = userUtil.removePwd(newUser);
 
