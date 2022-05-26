@@ -14,6 +14,11 @@ class UserRepo implements IUserRepo {
     const savedUser = await this.repo.save(user);
     return savedUser;
   };
+
+  getOneUser = async (payload: object) => {
+    const foundUser = await this.repo.findOneBy({ ...payload });
+    return foundUser;
+  };
 }
 
 export default new UserRepo();
