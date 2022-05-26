@@ -17,10 +17,10 @@ export class User {
   password: string;
 
   @Column({ type: "boolean", default: false, name: "is_admin" })
-  isAdmin: boolean;
+  isAdmin?: boolean;
 
   @OneToMany(() => Cart, (cart) => cart.user)
-  carts: Cart[];
+  carts?: Cart[];
 
   constructor() {
     if (!this.id) {
