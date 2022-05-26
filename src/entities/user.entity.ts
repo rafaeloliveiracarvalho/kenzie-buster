@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { v4 as uuid4 } from "uuid";
 
-@Entity('users')
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id?: string;
 
   @Column({ nullable: false })
@@ -14,6 +15,12 @@ export class User {
   @Column({ nullable: false })
   password: string;
 
-  @Column({ type: 'boolean', default: false })
+  @Column({ type: "boolean", default: false, name: "is_admin" })
   isAdmin: boolean;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid4();
+    }
+  }
 }
