@@ -27,7 +27,10 @@
     "typescript": "4.5.2"
   },
   "scripts": {
-    "dev": "ts-node-dev src/server.ts",
-    "typeorm": "typeorm-ts-node-commonjs"
+    "dev": "ts-node-dev --files --rs src/server.ts",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "typeorm-ts-node-commonjs migration:create",
+    "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
   }
 }
