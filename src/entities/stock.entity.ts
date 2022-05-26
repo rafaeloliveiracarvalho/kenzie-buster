@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { v4 as uuid4 } from "uuid";
+import { Dvd } from "./dvd.entity";
 
 @Entity("stock")
 export class Stock {
@@ -11,6 +12,9 @@ export class Stock {
 
   @Column({ type: "float", nullable: false })
   price: number;
+
+  @OneToOne(() => Dvd, (dvd) => dvd.stock)
+  dvd: Dvd;
 
   constructor() {
     if (!this.id) {
