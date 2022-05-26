@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { v4 as uuid4 } from "uuid";
 
 @Entity("dvds")
 export class Dvd {
@@ -10,4 +11,10 @@ export class Dvd {
 
   @Column({ nullable: false })
   duration: string;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid4();
+    }
+  }
 }

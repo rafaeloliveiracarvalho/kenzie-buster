@@ -1,4 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { v4 as uuid4 } from "uuid";
 
 @Entity("carts")
 export class Cart {
@@ -10,4 +11,10 @@ export class Cart {
 
   @Column({ type: "float", nullable: false })
   total: number;
+
+  constructor() {
+    if (!this.id) {
+      this.id = uuid4();
+    }
+  }
 }
