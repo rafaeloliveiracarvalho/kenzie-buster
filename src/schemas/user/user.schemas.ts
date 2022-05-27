@@ -8,3 +8,8 @@ export const createUserSchema = yup.object().shape({
   email: yup.string().email().required("email is a required field"),
   password: yup.string().required("password is a required field"),
 });
+
+export const loginUserSchema = yup.object().shape({
+  email: yup.string().email().required("email is a required field"),
+  password: yup.string().required("password is a required field"),
+});
