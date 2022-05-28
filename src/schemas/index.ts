@@ -4,4 +4,11 @@ import {
   serializedUserSchema,
 } from "./user.schemas";
 
-export { createUserSchema, loginUserSchema, serializedUserSchema };
+import { createDvdSchema } from "./dvd.schemas";
+
+export {
+  createUserSchema,
+  loginUserSchema,
+  serializedUserSchema,
+  createDvdSchema,
+};
