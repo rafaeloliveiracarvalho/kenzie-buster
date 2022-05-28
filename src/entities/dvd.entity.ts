@@ -22,7 +22,7 @@ export class Dvd {
   duration: string;
 
   @OneToMany(() => Cart, (cart) => cart.dvd)
-  carts: Cart[];
+  carts?: Cart[];
 
   @OneToOne(() => Stock, (stock) => stock.dvd)
   @JoinColumn()

@@ -1,9 +1,10 @@
-import { User } from "../entities";
+import { Dvd, User } from "../entities";
+import { ICreateDvd } from "../interfaces";
 
 declare global {
   namespace Express {
     interface Request {
-      validated: Partial<User>;
+      validated: User | ICreateDvd;
       decoded: User;
     }
   }

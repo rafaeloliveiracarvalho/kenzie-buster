@@ -5,7 +5,7 @@ import { ErrorHandler } from "../errors";
 
 class ValidateUserPermission {
   toCreateAdminUser = (req: Request, res: Response, next: NextFunction) => {
-    if (!req.validated.isAdmin) {
+    if (!(req.validated as User).isAdmin) {
       return next();
     }
 
