@@ -1,10 +1,11 @@
-import { compare, hash } from "bcrypt";
 import { Request } from "express";
-import { User } from "../entities";
-import { userRepo } from "../repositories";
-import { userUtil } from "../utils";
+import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { config as dotenvConfig } from "dotenv";
+
+import { User } from "../entities";
+import { userRepo } from "../repositories";
+import { serializedUserSchema } from "../schemas";
 
 dotenvConfig();
 
@@ -13,7 +14,9 @@ class UserService {
     validated.password = await hash(validated.password, 10);
     const newUser = await userRepo.save(validated);
 
-    const newUserWop = userUtil.removePwd(newUser);
+    const newUserWop = await serializedUserSchema.validate(newUser, {
+      stripUnknown: true,
+    });
 
     return newUserWop;
   };
@@ -31,7 +34,9 @@ class UserService {
       return { status: 400, message: { message: "Invalid email or password" } };
     }
 
-    const user = userUtil.removePwd(foundUser);
+    const user = await serializedUserSchema.validate(foundUser, {
+      stripUnknown: true,
+    });
 
     const token = sign({ ...user }, process.env.SECRET_KEY, {
       expiresIn: process.env.EXPIRES_IN,

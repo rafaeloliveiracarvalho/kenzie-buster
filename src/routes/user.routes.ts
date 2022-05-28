@@ -5,7 +5,7 @@ import {
   verifyEmailAlreadyExists,
 } from "../middlewares";
 import validateSchema from "../middlewares/validateSchema.middleware";
-import { createUserSchema, loginUserSchema } from "../schemas/user";
+import { createUserSchema, loginUserSchema } from "../schemas";
 
 const userRouter = Router();
 
