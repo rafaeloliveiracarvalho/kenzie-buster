@@ -1,3 +1,4 @@
 import verifyEmailAlreadyExists from "./verifyEmailAlreadyExists.middleware";
+import ValidateUserPermission from "./validateUserPermission.middleware";
 
-export { verifyEmailAlreadyExists };
+export { verifyEmailAlreadyExists, ValidateUserPermission };
