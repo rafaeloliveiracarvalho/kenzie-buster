@@ -11,7 +11,7 @@ dotenvConfig();
 
 class UserService {
   createUser = async ({ validated }: Request): Promise<Partial<User>> => {
-    validated.password = await hash(validated.password, 10);
+    (validated as User).password = await hash((validated as User).password, 10);
     const newUser = await userRepo.save(validated);
 
     const newUserWop = await serializedUserSchema.validate(newUser, {
@@ -22,7 +22,7 @@ class UserService {
   };
 
   login = async ({ validated }: Request) => {
-    const { email, password } = validated;
+    const { email, password } = validated as User;
 
     const foundUser = await userRepo.getOneUser({ email });
 
