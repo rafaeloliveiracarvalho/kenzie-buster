@@ -31,13 +31,15 @@ class UserService {
       return { status: 400, message: { message: "Invalid email or password" } };
     }
 
-    const token = sign({ id: foundUser.id }, process.env.SECRET_KEY, {
+    const user = userUtil.removePwd(foundUser);
+
+    const token = sign({ ...user }, process.env.SECRET_KEY, {
       expiresIn: process.env.EXPIRES_IN,
     });
 
     return {
       status: 200,
-      message: { user: userUtil.removePwd(foundUser), token },
+      message: { user, token },
     };
   };
 }
