@@ -1,3 +1,5 @@
 import { IUserRepo } from "./user.interfaces";
+import { IDvdRepo, ICreateDvd } from "./dvd.interfaces";
+import { IStockRepo } from "./stock.interfaces";
 
-export { IUserRepo };
+export { IUserRepo, IDvdRepo, ICreateDvd, IStockRepo };
