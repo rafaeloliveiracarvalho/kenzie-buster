@@ -3,9 +3,9 @@ import dvdService from "../services/dvd.service";
 
 class DvdController {
   createDvd = async (req: Request, res: Response) => {
-    const newDvd = await dvdService.createDvd(req);
+    const newDvds = await dvdService.createDvd(req);
 
-    res.status(200).json(newDvd);
+    res.status(200).json({ dvds: newDvds });
   };
 }
 
