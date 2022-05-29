@@ -14,4 +14,6 @@ dvdRouter.post(
   dvdController.createDvd,
 );
 
+dvdRouter.get("", dvdController.getAllDvds);
+
 export default dvdRouter;

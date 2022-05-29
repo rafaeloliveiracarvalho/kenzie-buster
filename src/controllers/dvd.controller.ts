@@ -7,6 +7,12 @@ class DvdController {
 
     res.status(200).json({ dvds: newDvds });
   };
+
+  getAllDvds = async (_: Request, res: Response) => {
+    const allDvds = await dvdService.getAllDvds();
+
+    res.status(200).json([...allDvds]);
+  };
 }
 
 export default new DvdController();

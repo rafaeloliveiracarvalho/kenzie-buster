@@ -26,6 +26,10 @@ class DvdService {
 
     return savedDvds;
   };
+
+  getAllDvds = async () => {
+    return await dvdRepo.getAllDvds();
+  };
 }
 
 export default new DvdService();

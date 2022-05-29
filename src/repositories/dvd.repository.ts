@@ -25,9 +25,8 @@ class DvdRepo implements IDvdRepo {
     return savedDvds;
   };
 
-  getOneDvd = async (payload: object) => {
-    const foundDvd = this.repo.findOneBy({ ...payload });
-    return foundDvd;
+  getAllDvds = async () => {
+    return await this.repo.find();
   };
 }
 

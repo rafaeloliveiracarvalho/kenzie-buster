@@ -2,7 +2,7 @@ import { Dvd } from "../entities";
 
 interface IDvdRepo {
   saveMany: (dvds: Partial<Dvd>[]) => Promise<Dvd[]>;
-  getOneDvd: (payload: object) => Promise<Dvd>;
+  getAllDvds: () => Promise<Dvd[]>;
 }
 
 interface ICreateDvd {
