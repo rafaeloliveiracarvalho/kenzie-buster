@@ -1,10 +1,10 @@
 import { Dvd, User } from "../entities";
-import { ICreateDvd } from "../interfaces";
+import { ICreateDvd, ICreateManyDvds } from "../interfaces";
 
 declare global {
   namespace Express {
     interface Request {
-      validated: User | ICreateDvd;
+      validated: User | ICreateManyDvds;
       decoded: User;
     }
   }

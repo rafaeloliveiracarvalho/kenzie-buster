@@ -10,9 +10,19 @@ class StockRepo implements IStockRepo {
     this.repo = AppDataSource.getRepository(Stock);
   }
 
-  save = async (stock: Partial<Stock>) => {
-    const savedStock = await this.repo.save(stock);
-    return savedStock;
+  saveMany = async (stocks: Partial<Stock>[]) => {
+    const insertedStocks = await this.repo
+      .createQueryBuilder()
+      .insert()
+      .values(stocks)
+      .execute();
+
+    const returnStocks: Stock[] = [];
+
+    for (let { id } of insertedStocks.generatedMaps) {
+      returnStocks.push(await this.repo.findOneBy({ id }));
+    }
+    return returnStocks;
   };
 }
 

@@ -10,9 +10,19 @@ class DvdRepo implements IDvdRepo {
     this.repo = AppDataSource.getRepository(Dvd);
   }
 
-  save = async (dvd: Partial<Dvd>) => {
-    const savedDvd = await this.repo.save(dvd);
-    return savedDvd;
+  saveMany = async (dvds: Partial<Dvd>[]) => {
+    const insertedDvds = await this.repo
+      .createQueryBuilder()
+      .insert()
+      .values(dvds)
+      .execute();
+
+    const savedDvds: Dvd[] = [];
+
+    for (let { id } of insertedDvds.generatedMaps) {
+      savedDvds.push(await this.repo.findOneBy({ id }));
+    }
+    return savedDvds;
   };
 
   getOneDvd = async (payload: object) => {

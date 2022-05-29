@@ -1,7 +1,7 @@
 import { Dvd } from "../entities";
 
 interface IDvdRepo {
-  save: (dvd: Partial<Dvd>) => Promise<Dvd>;
+  saveMany: (dvds: Partial<Dvd>[]) => Promise<Dvd[]>;
   getOneDvd: (payload: object) => Promise<Dvd>;
 }
 
@@ -12,4 +12,8 @@ interface ICreateDvd {
   quantity: number;
 }
 
-export { IDvdRepo, ICreateDvd };
+interface ICreateManyDvds {
+  dvds: ICreateDvd[];
+}
+
+export { IDvdRepo, ICreateDvd, ICreateManyDvds };

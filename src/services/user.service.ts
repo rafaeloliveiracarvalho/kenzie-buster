@@ -12,7 +12,7 @@ dotenvConfig();
 class UserService {
   createUser = async ({ validated }: Request): Promise<Partial<User>> => {
     (validated as User).password = await hash((validated as User).password, 10);
-    const newUser = await userRepo.save(validated);
+    const newUser = await userRepo.save(validated as User);
 
     const newUserWop = await serializedUserSchema.validate(newUser, {
       stripUnknown: true,
