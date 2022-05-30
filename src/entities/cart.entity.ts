@@ -15,7 +15,7 @@ export class Cart {
   total: number;
 
   @ManyToOne(() => User, (user) => user.carts)
-  user: Partial<User>;
+  customer: Partial<User>;
 
   @ManyToOne(() => Dvd, (dvd) => dvd.carts)
   dvd: Dvd;

@@ -19,7 +19,7 @@ export class User {
   @Column({ type: "boolean", default: false, name: "is_admin" })
   isAdmin?: boolean;
 
-  @OneToMany(() => Cart, (cart) => cart.user)
+  @OneToMany(() => Cart, (cart) => cart.customer)
   carts?: Cart[];
 
   constructor() {
