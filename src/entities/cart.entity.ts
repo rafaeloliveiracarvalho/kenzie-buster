@@ -9,13 +9,13 @@ export class Cart {
   id?: string;
 
   @Column({ type: "boolean", default: false })
-  paid: boolean;
+  paid?: boolean;
 
   @Column({ type: "float", nullable: false })
   total: number;
 
   @ManyToOne(() => User, (user) => user.carts)
-  user: User;
+  user: Partial<User>;
 
   @ManyToOne(() => Dvd, (dvd) => dvd.carts)
   dvd: Dvd;

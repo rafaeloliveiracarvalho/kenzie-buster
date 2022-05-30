@@ -28,6 +28,10 @@ class DvdRepo implements IDvdRepo {
   getAllDvds = async () => {
     return await this.repo.find();
   };
+
+  getOneDvd = async (payload: object) => {
+    return await this.repo.findOneBy({ ...payload });
+  };
 }
 
 export default new DvdRepo();
