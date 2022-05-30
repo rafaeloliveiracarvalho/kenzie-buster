@@ -14,4 +14,8 @@ const createDvdSchema = yup.object().shape({
     .required(),
 });
 
-export { createDvdSchema };
+const addDvdInCartSchema = yup.object().shape({
+  quantity: yup.number().positive().required(),
+});
+
+export { createDvdSchema, addDvdInCartSchema };

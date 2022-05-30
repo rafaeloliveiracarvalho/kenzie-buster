@@ -1,3 +1,4 @@
+import { Timestamp } from "typeorm";
 import { User } from "../entities";
 
 interface IUserRepo {
@@ -5,4 +6,13 @@ interface IUserRepo {
   getOneUser: (payload: object) => Promise<User>;
 }
 
-export { IUserRepo };
+interface IUserDecoded {
+  id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  iat: Timestamp;
+  exp: Timestamp;
+}
+
+export { IUserRepo, IUserDecoded };

@@ -4,11 +4,12 @@ import {
   serializedUserSchema,
 } from "./user.schemas";
 
-import { createDvdSchema } from "./dvd.schemas";
+import { createDvdSchema, addDvdInCartSchema } from "./dvd.schemas";
 
 export {
   createUserSchema,
   loginUserSchema,
   serializedUserSchema,
   createDvdSchema,
+  addDvdInCartSchema,
 };
