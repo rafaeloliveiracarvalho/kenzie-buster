@@ -17,6 +17,10 @@ class CartRepo implements ICartRepo {
   getNoPaidCart = async (payload: object) => {
     return this.repo.findOneBy({ ...payload });
   };
+
+  updateCart = async (payload: Cart) => {
+    return await this.repo.save(payload);
+  };
 }
 
 export default new CartRepo();

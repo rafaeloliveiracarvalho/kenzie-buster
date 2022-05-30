@@ -1,5 +1,5 @@
 import { Request } from "express";
-import { User } from "../entities";
+import { Cart, Dvd, User } from "../entities";
 import { IAddDvdInCart, IUserDecoded } from "../interfaces";
 import { cartRepo } from "../repositories";
 
@@ -7,17 +7,15 @@ class CartService {
   addDvdInCart = async ({ dvd, decoded, validated }: Request) => {
     const { quantity } = validated as IAddDvdInCart;
     const { exp, iat, ...user } = decoded as IUserDecoded;
+
+    const noCartPaid = await this.getNoPaidCart({ decoded } as Request);
+
+    if (noCartPaid) {
+      const updatedCart = this.updateCart(dvd, quantity, noCartPaid);
+      return updatedCart;
+    }
+
     const total = +(quantity * dvd.stock.price).toFixed(2);
-
-    // const noCardPaid = await this.getNoPaidCart({ decoded } as Request);
-
-    // console.log("\n\n\n");
-    // console.log("noCardPaid", noCardPaid);
-    // console.log("\n\n\n");
-
-    // if (noCardPaid) {
-    // }
-
     const newCart = await cartRepo.createCart({
       total,
       customer: { ...user },
@@ -34,7 +32,12 @@ class CartService {
     return cart;
   };
 
-  updateCart = async () => {};
+  updateCart = async (dvd: Dvd, quantity: number, noCartPaid: Cart) => {
+    noCartPaid.dvds.push(dvd);
+    noCartPaid.total += +(quantity * dvd.stock.price).toFixed(2);
+
+    return await cartRepo.updateCart(noCartPaid);
+  };
 }
 
 export default new CartService();
