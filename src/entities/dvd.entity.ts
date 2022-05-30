@@ -2,7 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToMany,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -21,8 +21,8 @@ export class Dvd {
   @Column({ nullable: false })
   duration: string;
 
-  @OneToMany(() => Cart, (cart) => cart.dvd)
-  carts?: Cart[];
+  @ManyToMany(() => Cart, (cart) => cart.dvds)
+  carts?: Cart;
 
   @OneToOne(() => Stock, (stock) => stock.dvd, { eager: true })
   @JoinColumn()

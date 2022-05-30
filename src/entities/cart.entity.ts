@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { v4 as uuid4 } from "uuid";
 import { Dvd } from "./dvd.entity";
 import { User } from "./user.entity";
@@ -14,11 +22,12 @@ export class Cart {
   @Column({ type: "float", nullable: false })
   total: number;
 
-  @ManyToOne(() => User, (user) => user.carts)
+  @ManyToOne(() => User, (user) => user.carts, { eager: true })
   customer: Partial<User>;
 
-  @ManyToOne(() => Dvd, (dvd) => dvd.carts)
-  dvd: Dvd;
+  @ManyToMany(() => Dvd, (dvd) => dvd.carts, { eager: true, cascade: true })
+  @JoinTable()
+  dvds: Dvd[];
 
   constructor() {
     if (!this.id) {
