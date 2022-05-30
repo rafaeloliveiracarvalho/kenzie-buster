@@ -13,6 +13,10 @@ class CartRepo implements ICartRepo {
   createCart = async (payload: Partial<Cart>) => {
     return this.repo.save({ ...payload });
   };
+
+  getNoPaidCart = async (payload: object) => {
+    return this.repo.findOneBy({ ...payload });
+  };
 }
 
 export default new CartRepo();
