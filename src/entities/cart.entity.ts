@@ -5,9 +5,11 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { v4 as uuid4 } from "uuid";
+import { CartsDvds } from "./carts_dvds.entity";
 import { Dvd } from "./dvd.entity";
 import { User } from "./user.entity";
 
@@ -25,9 +27,8 @@ export class Cart {
   @ManyToOne(() => User, (user) => user.carts, { eager: true })
   customer: Partial<User>;
 
-  @ManyToMany(() => Dvd, (dvd) => dvd.carts, { eager: true, cascade: true })
-  @JoinTable()
-  dvds: Dvd[];
+  @OneToMany((type) => CartsDvds, (cartDvd) => cartDvd.cart)
+  cartDvd: CartsDvds[];
 
   constructor() {
     if (!this.id) {
