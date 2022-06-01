@@ -1,7 +1,7 @@
 import { Request } from "express";
-import { Dvd, Stock } from "../entities";
-import { ICreateManyDvds } from "../interfaces";
-import { dvdRepo, stockRepo } from "../repositories";
+import { Cart, Dvd, Stock } from "../entities";
+import { ICreateManyDvds, IDvdInCart } from "../interfaces";
+import { cartsDvdsRepo, dvdRepo, stockRepo } from "../repositories";
 
 class DvdService {
   createDvd = async ({ validated }: Request) => {
@@ -29,6 +29,22 @@ class DvdService {
 
   getAllDvds = async () => {
     return await dvdRepo.getAllDvds();
+  };
+
+  updateStock = async (cart: Cart) => {
+    const dvdsInCart: IDvdInCart[] = await cartsDvdsRepo.getDvdsInCart(cart);
+    const allDvds = await this.getAllDvds();
+
+    for (let i = 0; i < dvdsInCart.length; i++) {
+      const currentQuantityInStock = allDvds.find(
+        ({ id }) => id === dvdsInCart[i].id,
+      ).stock.quantity;
+
+      const updatedQuantity =
+        currentQuantityInStock - parseInt(dvdsInCart[i].quantity);
+
+      await stockRepo.updateStock(dvdsInCart[i].stockid, updatedQuantity);
+    }
   };
 }
 

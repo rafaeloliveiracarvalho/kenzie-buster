@@ -4,6 +4,7 @@ import {
   ICreateDvd,
   IAddDvdInCart,
   ICreateManyDvds,
+  IDvdInCart,
 } from "./dvd.interfaces";
 import { IStockRepo } from "./stock.interfaces";
 import { ICartRepo } from "./cart.interfaces";
@@ -20,4 +21,5 @@ export {
   IUserDecoded,
   ICartsDvdsRepo,
   IUserWOP,
+  IDvdInCart,
 };

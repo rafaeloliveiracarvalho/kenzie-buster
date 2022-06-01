@@ -21,10 +21,6 @@ class CartRepo implements ICartRepo {
   updateCart = async (payload: Cart) => {
     return await this.repo.save(payload);
   };
-
-  getNoPaidCartResponse = async (payload: object) => {
-    // return this.repo.createQueryBuilder().leftJoinAndSelect("carts")
-  };
 }
 
 export default new CartRepo();

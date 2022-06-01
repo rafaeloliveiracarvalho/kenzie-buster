@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { ErrorHandler } from "../errors";
 import { IAddDvdInCart } from "../interfaces";
-import { dvdRepo } from "../repositories";
+import { cartsDvdsRepo, dvdRepo } from "../repositories";
 
 class ValidadeDvd {
   ifExist = async (req: Request, res: Response, next: NextFunction) => {
@@ -28,6 +28,23 @@ class ValidadeDvd {
     try {
       const { quantity } = req.validated as IAddDvdInCart;
       const { stock } = req.dvd;
+
+      if (req.cart) {
+        const { quantity: qtdInCart } =
+          await cartsDvdsRepo.calculateTotalQuantityByDvdInCart(
+            req.cart,
+            req.dvd,
+          );
+
+        const demand = +qtdInCart + quantity;
+
+        if (demand > stock.quantity) {
+          throw new ErrorHandler(
+            422,
+            `current stock: ${stock.quantity}, received demand ${demand}`,
+          );
+        }
+      }
 
       if (quantity > stock.quantity) {
         throw new ErrorHandler(

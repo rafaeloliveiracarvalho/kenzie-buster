@@ -24,6 +24,15 @@ class StockRepo implements IStockRepo {
     }
     return returnStocks;
   };
+
+  updateStock = async (stockId: string, quantity: number) => {
+    await this.repo
+      .createQueryBuilder()
+      .update(Stock)
+      .set({ quantity })
+      .where("id = :id", { id: stockId })
+      .execute();
+  };
 }
 
 export default new StockRepo();

@@ -21,4 +21,13 @@ interface IAddDvdInCart {
   quantity: number;
 }
 
-export { IDvdRepo, ICreateDvd, ICreateManyDvds, IAddDvdInCart };
+interface IDvdInCart {
+  id: string;
+  quantity: string;
+  name: string;
+  duration: string;
+  price: number;
+  stockid: string;
+}
+
+export { IDvdRepo, ICreateDvd, ICreateManyDvds, IAddDvdInCart, IDvdInCart };

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { userController } from "../controllers";
 import {
-  ValidateUserPermission,
+  validateUserPermission,
   verifyEmailAlreadyExists,
 } from "../middlewares";
 import validateSchema from "../middlewares/validateSchema.middleware";
@@ -13,7 +13,7 @@ userRouter.post(
   "/register",
   validateSchema(createUserSchema),
   verifyEmailAlreadyExists,
-  ValidateUserPermission.toCreateAdminUser,
+  validateUserPermission.toCreateAdminUser,
   userController.create,
 );
 
