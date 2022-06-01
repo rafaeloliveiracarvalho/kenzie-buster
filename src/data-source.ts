@@ -7,7 +7,7 @@ dotenvConfig();
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  url: process.env.DB_URL,
+  url: process.env.DATABASE_URL,
   logging: true,
   ssl: { rejectUnauthorized: false },
   entities: [path.join(__dirname, "./entities/**/*.{js,ts}")],
