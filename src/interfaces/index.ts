@@ -7,7 +7,7 @@ import {
   IDvdInCart,
 } from "./dvd.interfaces";
 import { IStockRepo } from "./stock.interfaces";
-import { ICartRepo } from "./cart.interfaces";
+import { ICartRepo, ISerializedCart } from "./cart.interfaces";
 import { ICartsDvdsRepo } from "./carts_dvds.interfaces";
 
 export {
@@ -22,4 +22,5 @@ export {
   ICartsDvdsRepo,
   IUserWOP,
   IDvdInCart,
+  ISerializedCart,
 };

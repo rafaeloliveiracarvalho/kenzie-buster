@@ -11,4 +11,10 @@ cartRouter.put(
   cartController.payment,
 );
 
+cartRouter.get(
+  "",
+  validateUserPermission.validateToken,
+  cartController.getAllCarts,
+);
+
 export default cartRouter;

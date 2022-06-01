@@ -1,5 +1,5 @@
 import { UpdateResult } from "typeorm";
-import { Cart } from "../entities";
+import { Cart, Dvd, User } from "../entities";
 
 interface ICartRepo {
   createCart: (payload: Partial<Cart>) => Promise<Cart>;
@@ -7,4 +7,11 @@ interface ICartRepo {
   updateCart: (payload: Cart) => Promise<Cart | UpdateResult>;
 }
 
-export { ICartRepo };
+interface ISerializedCart {
+  id?: string;
+  paid?: boolean;
+  total: number;
+  dvds: Partial<Dvd>[];
+}
+
+export { ICartRepo, ISerializedCart };

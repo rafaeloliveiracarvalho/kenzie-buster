@@ -9,6 +9,12 @@ class CartController {
     return res.status(200).json(cart);
   };
 
+  getAllCarts = async (req: Request, res: Response) => {
+    const carts = await cartService.getAllCarts(req);
+
+    res.status(200).json(carts);
+  };
+
   payment = async (req: Request, res: Response) => {
     try {
       const cart = await cartService.payment(req);

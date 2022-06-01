@@ -1,9 +1,14 @@
 import { Request } from "express";
 import { Cart } from "../entities";
 import { ErrorHandler } from "../errors";
-import { IAddDvdInCart, IUserDecoded, IUserWOP } from "../interfaces";
+import {
+  IAddDvdInCart,
+  ISerializedCart,
+  IUserDecoded,
+  IUserWOP,
+} from "../interfaces";
 import { cartRepo, cartsDvdsRepo } from "../repositories";
-import { serializedCartSchema } from "../schemas";
+import { serializedAllCartSchema, serializedCartSchema } from "../schemas";
 
 class CartService {
   addDvdInCart = async ({ dvd, decoded, validated, cart }: Request) => {
@@ -33,6 +38,26 @@ class CartService {
     const updatedCart = await cartRepo.updateCart(cart);
 
     return this.makeCartResponse(updatedCart);
+  };
+
+  getAllCarts = async ({ decoded }: Request) => {
+    const { exp, iat, ...user } = decoded as IUserDecoded;
+
+    const allCarts = await cartRepo.getAllCartsByCustomer(user);
+
+    const allCartsWithDvds = [];
+
+    for (let i = 0; i < allCarts.length; i++) {
+      const currentCart = allCarts[i];
+      const dvds = await cartsDvdsRepo.getDvdsInCart(currentCart);
+      const { cartsDvds, customer, ...serializedCart } = currentCart;
+      (serializedCart as ISerializedCart).dvds = [...dvds];
+      allCartsWithDvds.push(serializedCart);
+    }
+
+    return await serializedAllCartSchema.validate(allCartsWithDvds, {
+      stripUnknown: true,
+    });
   };
 
   private makeCartResponse = async (updatedCart: Cart) => {

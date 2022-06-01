@@ -6,7 +6,7 @@ import {
 
 import { createDvdSchema, addDvdInCartSchema } from "./dvd.schemas";
 
-import { serializedCartSchema } from "./cart.schemas";
+import { serializedCartSchema, serializedAllCartSchema } from "./cart.schemas";
 
 export {
   createUserSchema,
@@ -15,4 +15,5 @@ export {
   createDvdSchema,
   addDvdInCartSchema,
   serializedCartSchema,
+  serializedAllCartSchema,
 };
