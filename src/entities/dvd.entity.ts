@@ -23,8 +23,8 @@ export class Dvd {
   @Column({ nullable: false })
   duration: string;
 
-  @OneToMany((type) => CartsDvds, (cartDvd) => cartDvd.dvd)
-  cartDvd: CartsDvds[];
+  @OneToMany(() => CartsDvds, (cartDvd) => cartDvd.dvd)
+  cartsDvds: CartsDvds[];
 
   @OneToOne(() => Stock, (stock) => stock.dvd, { eager: true })
   @JoinColumn()

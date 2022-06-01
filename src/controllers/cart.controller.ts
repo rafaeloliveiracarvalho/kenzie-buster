@@ -3,9 +3,9 @@ import { cartService } from "../services";
 
 class CartController {
   addDvdInCart = async (req: Request, res: Response) => {
-    const newCart = await cartService.addDvdInCart(req);
+    const cart = await cartService.addDvdInCart(req);
 
-    return res.status(200).json(newCart);
+    return res.status(200).json(cart);
   };
 }
 

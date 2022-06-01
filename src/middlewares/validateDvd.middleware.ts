@@ -7,6 +7,7 @@ class ValidadeDvd {
   ifExist = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { dvdId } = req.params;
+
       const foundDvd = await dvdRepo.getOneDvd({ id: dvdId });
 
       if (!foundDvd) {
@@ -18,7 +19,7 @@ class ValidadeDvd {
       return next();
     } catch (error) {
       if (error instanceof ErrorHandler) {
-        res.status(error.statusCode).json({ error: error.message });
+        return res.status(error.statusCode).json({ error: error.message });
       }
     }
   };
@@ -38,7 +39,7 @@ class ValidadeDvd {
       return next();
     } catch (error) {
       if (error instanceof ErrorHandler) {
-        res.status(error.statusCode).json({ error: error.message });
+        return res.status(error.statusCode).json({ error: error.message });
       }
     }
   };

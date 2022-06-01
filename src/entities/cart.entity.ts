@@ -27,8 +27,8 @@ export class Cart {
   @ManyToOne(() => User, (user) => user.carts, { eager: true })
   customer: Partial<User>;
 
-  @OneToMany((type) => CartsDvds, (cartDvd) => cartDvd.cart)
-  cartDvd: CartsDvds[];
+  @OneToMany(() => CartsDvds, (cartDvd) => cartDvd.cart)
+  cartsDvds: CartsDvds[];
 
   constructor() {
     if (!this.id) {

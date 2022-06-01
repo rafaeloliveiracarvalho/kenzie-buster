@@ -1,8 +1,13 @@
-import { IUserRepo, IUserDecoded } from "./user.interfaces";
-import { IDvdRepo, ICreateDvd, IAddDvdInCart } from "./dvd.interfaces";
+import { IUserRepo, IUserDecoded, IUserWOP } from "./user.interfaces";
+import {
+  IDvdRepo,
+  ICreateDvd,
+  IAddDvdInCart,
+  ICreateManyDvds,
+} from "./dvd.interfaces";
 import { IStockRepo } from "./stock.interfaces";
-import { ICreateManyDvds } from "./dvd.interfaces";
 import { ICartRepo } from "./cart.interfaces";
+import { ICartsDvdsRepo } from "./carts_dvds.interfaces";
 
 export {
   IUserRepo,
@@ -13,4 +18,6 @@ export {
   IAddDvdInCart,
   ICartRepo,
   IUserDecoded,
+  ICartsDvdsRepo,
+  IUserWOP,
 };
