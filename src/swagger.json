@@ -3,12 +3,16 @@
   "info": {
     "title": "Kenzie Buster API",
     "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster.",
-    "version": "v1"
+    "version": "1.0.0"
   },
   "servers": [
     {
       "url": "http://localhost:3000/api/v1",
       "description": "API de desenvolvimento"
+    },
+    {
+      "url": "https://entrega-kenzie-buster.herokuapp.com/api/v1",
+      "description": "API de produção"
     }
   ],
   "paths": {
@@ -232,9 +236,114 @@
           }
         }
       }
+    },
+    "/dvds/register": {
+      "post": {
+        "summary": "Registro de dvds",
+        "description": "Rota para registro de dvds. <br/><br/>Somente usuários admin podem registrar dvds.",
+        "tags": ["DVD"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DVDRegisterRequest"
+              },
+              "examples": {
+                "DVDS": {
+                  "value": {
+                    "dvds": [
+                      {
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "quantity": 30,
+                        "price": 5.0
+                      },
+                      {
+                        "name": "Meu Malvado Favorito",
+                        "duration": "1h45min",
+                        "quantity": 182,
+                        "price": 34.99
+                      },
+                      {
+                        "name": "Star Wars",
+                        "duration": "2h12min",
+                        "quantity": 26,
+                        "price": 155.0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVDRegisterRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": ["dvds is a required field"]
+                    }
+                  },
+                  "info_dvd_nao_enviada": {
+                    "value": {
+                      "error": [
+                        "dvds[0].price is a required field",
+                        "dvds[1].quantity is a required field",
+                        "dvds[2].duration is a required field",
+                        "dvds[3].name is a required field"
+                      ]
+                    }
+                  },
+                  "price_enviado_como_string": {
+                    "value": {
+                      "error": [
+                        "dvds[0].price must be a `number` type, but the final value was: `NaN` (cast from the value `\"sadasd\"`)."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta um DVD sem token válido, ou com token de usuário não admin",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  },
+                  "sem_permissao_admin": {
+                    "value": {
+                      "error": "Missing admin permission."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "UserLoginRequest": {
         "type": "object",
@@ -320,11 +429,29 @@
           }
         }
       },
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+      "DVDRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "dvds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
         }
       }
     }
