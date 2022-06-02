@@ -1,5 +1,5 @@
 import { Repository } from "typeorm";
-import { AppDataSource } from "../data-source";
+import AppDataSource from "../data-source";
 import { Cart, CartsDvds, Dvd, Stock } from "../entities";
 import { ICartsDvdsRepo } from "../interfaces";
 
