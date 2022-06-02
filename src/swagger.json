@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Kenzie Buster API",
-    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster",
+    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster.",
     "version": "v1"
   },
   "servers": [
@@ -16,16 +16,121 @@
     }
   ],
   "paths": {
-    "/users/login": {
+    "/users/register": {
       "post": {
-        "summary": "Login de usuários",
-        "description": "Rota para login de usuários admins e não admins",
-        "tags": ["Login"],
+        "summary": "Registro de usuário",
+        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Somente usuários admin podem criar outros admins.",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              },
+              "examples": {
+                "kenzie": {
+                  "value": {
+                    "name": "kenzie",
+                    "email": "kenzie@mail.com",
+                    "password": "kenzinho",
+                    "isAdmin": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRegisterRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": [
+                        "name is a required field",
+                        "email is a required field",
+                        "password is a required field"
+                      ]
+                    }
+                  },
+                  "name_nao_enviado": {
+                    "value": {
+                      "error": ["name is a required field"]
+                    }
+                  },
+                  "email_nao_enviado": {
+                    "value": {
+                      "error": ["email is a required field"]
+                    }
+                  },
+                  "password_nao_enviado": {
+                    "value": {
+                      "error": ["password is a required field"]
+                    }
+                  },
+                  "email_enviado_como_array": {
+                    "value": {
+                      "error": [
+                        "email must be a `string` type, but the final value was: `[\n  \"\\\"kenzie@mail.com\\\"\"\n]`."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta criar um usuário como admin sem token válido, ou com token de usuário não admin",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  },
+                  "sem_permissao_admin": {
+                    "value": {
+                      "error": "Missing admin permission."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email já utilizado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "email_ja_utilizado": {
+                    "value": {
+                      "error": "Key (email)=(kenzie@kenzie.com) already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login de usuários",
+        "description": "Rota para login de usuários admins e não admins",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
               },
               "examples": {
                 "kenzie": {
@@ -40,18 +145,11 @@
         },
         "responses": {
           "400": {
-            "description": "Credenciais inválidas ou não enviadas",
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, quando as credenciais são inválidas ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
             "content": {
               "application/json": {
                 "schema": {
-                  "onOf": [
-                    {
-                      "$ref": "#/components/schemas/InvalidCredentials"
-                    },
-                    {
-                      "$ref": "#/components/schemas/EmptyBody"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/UserLoginRequest"
                 },
                 "examples": {
                   "credenciais_invalidas": {
@@ -66,6 +164,13 @@
                         "password is a required field"
                       ]
                     }
+                  },
+                  "email_enviado_como_array": {
+                    "value": {
+                      "error": [
+                        "email must be a `string` type, but the final value was: `[\n  \"\\\"kenzie@mail.com\\\"\"\n]`."
+                      ]
+                    }
                   }
                 }
               }
@@ -76,7 +181,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/UserLoginResponse"
                 },
                 "examples": {
                   "kenzie": {
@@ -100,7 +205,7 @@
   },
   "components": {
     "schemas": {
-      "LoginRequest": {
+      "UserLoginRequest": {
         "type": "object",
         "properties": {
           "email": {
@@ -111,7 +216,7 @@
           }
         }
       },
-      "LoginResponse": {
+      "UserLoginResponse": {
         "type": "object",
         "properties": {
           "user": {
@@ -136,30 +241,29 @@
           }
         }
       },
-      "InvalidCredentials": {
+      "UserRegisterRequest": {
         "type": "object",
         "properties": {
-          "type": "object",
-          "properties": {
-            "message": {
-              "type": "string"
-            }
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
           }
         }
-      },
-      "EmptyBody": {
-        "required": ["error"],
-        "properties": {
-          "type": "object",
-          "properties": {
-            "error": {
-              "schema": {
-                "type": "array",
-                "items": "string"
-              }
-            }
-          }
-        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
