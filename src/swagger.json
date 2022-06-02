@@ -7,18 +7,17 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000/api/v1",
-      "description": "API de desenvolvimento"
-    },
-    {
       "url": "https://entrega-kenzie-buster.herokuapp.com/api/v1",
       "description": "API de produção"
+    },
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "API de desenvolvimento"
     }
   ],
   "paths": {
     "/users/register": {
       "post": {
-        "summary": "Registro de usuário",
         "description": "Rota para registro de usuários admins e não admins. <br/><br/>Somente usuários admin podem criar outros admins.",
         "tags": ["User"],
         "security": [{ "bearerAuth": [] }],
@@ -123,7 +122,6 @@
     },
     "/users/login": {
       "post": {
-        "summary": "Login de usuários",
         "description": "Rota para login de usuários admins e não admins",
         "tags": ["User"],
         "requestBody": {
@@ -204,7 +202,6 @@
     },
     "/dvds": {
       "get": {
-        "summary": "Listagem de DVDs",
         "description": "Rota para listagem de todos os DVDs registrados",
         "tags": ["DVD"],
         "responses": {
@@ -239,7 +236,6 @@
     },
     "/dvds/register": {
       "post": {
-        "summary": "Registro de dvds",
         "description": "Rota para registro de dvds. <br/><br/>Somente usuários admin podem registrar dvds.",
         "tags": ["DVD"],
         "security": [{ "bearerAuth": [] }],
@@ -337,7 +333,6 @@
     },
     "/carts": {
       "get": {
-        "summary": "Listagem de carts",
         "description": "Rota para listagem de todos os carts criados",
         "tags": ["Cart"],
         "security": [{ "bearerAuth": [] }],
@@ -481,6 +476,60 @@
                   "dvd_nao_encontrado": {
                     "value": {
                       "error": "dvd not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/pay": {
+      "put": {
+        "description": "Rota para pagamento.",
+        "tags": ["Cart"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Pagamento realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvds": {
+                    "value": {
+                      "dvds": [
+                        {
+                          "price": 74.99,
+                          "duration": "2h55min",
+                          "name": "avengers: ultimato",
+                          "quantity": 2,
+                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                        }
+                      ],
+                      "customer": {
+                        "isAdmin": false,
+                        "email": "rafael@mail.com",
+                        "name": "Rafael",
+                        "id": "1a703081-7146-4605-9092-9839d18854a8"
+                      },
+                      "total": 149.98,
+                      "paid": false,
+                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Este erro ocorre quando não existem cart com pagamento pendente.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": "There is not cart to pay"
                     }
                   }
                 }
