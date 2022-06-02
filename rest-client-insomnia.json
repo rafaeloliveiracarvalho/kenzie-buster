@@ -1,0 +1,366 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2022-06-02T22:20:17.351Z",
+  "__export_source": "insomnia.desktop.app:v2022.3.0",
+  "resources": [
+    {
+      "_id": "req_770016e832a0402a9faedb421bfe6bc6",
+      "parentId": "fld_3da8340017174d9891b644d8777f7ba8",
+      "modified": 1654197275613,
+      "created": 1653647356822,
+      "url": "{{ baseUrlKenzieBuster }}/users/login",
+      "name": "Login",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"rafael@mail.com\",\n\t\"password\": \"123456\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_123ea4c5f44e4f1a9475dc70b0e72d9e"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1653521647650.75,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_3da8340017174d9891b644d8777f7ba8",
+      "parentId": "fld_4a31afa1f07647a495d38b89530d8e26",
+      "modified": 1653957479792,
+      "created": 1653767244769,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1653957469031,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_4a31afa1f07647a495d38b89530d8e26",
+      "parentId": "fld_60a329dbcd164de8af94608aeec9bd51",
+      "modified": 1653588626456,
+      "created": 1653588617109,
+      "name": "Entrega - Kenzie Buster",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1653316320777.5,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_60a329dbcd164de8af94608aeec9bd51",
+      "parentId": "fld_fb5915a7d65c40c181a4aa4ad3e4ed1d",
+      "modified": 1653316302562,
+      "created": 1653316298604,
+      "name": "Sprint-02-A",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1653076483594,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_fb5915a7d65c40c181a4aa4ad3e4ed1d",
+      "parentId": "wrk_061c29b665c24959a899c2eebccf9c66",
+      "modified": 1652479949152,
+      "created": 1652479949152,
+      "name": "Q4",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1652479949152,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_061c29b665c24959a899c2eebccf9c66",
+      "parentId": null,
+      "modified": 1652479949158,
+      "created": 1652479927255,
+      "name": "Q4",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_faf45b6f274d4369ad17a93e504c8444",
+      "parentId": "fld_3da8340017174d9891b644d8777f7ba8",
+      "modified": 1654180801360,
+      "created": 1653661360881,
+      "url": "{{ baseUrlKenzieBuster }}/users/register",
+      "name": "Create user",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Kenzie\",\n\t\"email\": \"kenzie@kenzie.com\",\n\t\"password\": [\"kenzinho\"],\n\t\"isAdmin\": false\n}\n\n"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_123ea4c5f44e4f1a9475dc70b0e72d9e"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{% response 'body', 'req_770016e832a0402a9faedb421bfe6bc6', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+        "disabled": false
+      },
+      "metaSortKey": -1653521647600.75,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5a61b2695a794fb38a1b57ce6319ea7a",
+      "parentId": "fld_33b9dbcb63204b2c9f74df27c50d3918",
+      "modified": 1654197212221,
+      "created": 1653759086699,
+      "url": "{{ baseUrlKenzieBuster }}/dvds/register",
+      "name": "Create DVD",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"dvds\":[\n\t\t{\n\t\t\t\t\"name\": \"E o vento levou\",\n\t\t\t\t\"duration\": \"1h12min\",\n\t\t\t\t\"quantity\": 30,\n\t\t\t\t\"price\": \"sadasd\"\n\n\t\t},\n\t\t{\n\t\t\t\t\"name\": \"Meu Malvado Favorito\",\n\t\t\t\t\"duration\": \"1h45min\",\n\t\t\t\t\"quantity\": 182,\n\t\t\t\t\"price\": 34.99\n\t\t},\n\t\t{\n\t\t\t\t\"name\": \"Star Wars\",\n\t\t\t\t\"duration\": \"2h12min\",\n\t\t\t\t\"quantity\": 26,\n\t\t\t\t\"price\": 155.00\n\t\t},\n\t\t{\n\t\t\t\t\"name\": \"Senor dos Anes\",\n\t\t\t\t\"duration\": \"5h12min\",\n\t\t\t\t\"quantity\": 93,\n\t\t\t\t\"price\": 305.00\n\t\t}\n\t]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_123ea4c5f44e4f1a9475dc70b0e72d9e"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{% response 'body', 'req_770016e832a0402a9faedb421bfe6bc6', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+        "disabled": false
+      },
+      "metaSortKey": -1653454644694.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_33b9dbcb63204b2c9f74df27c50d3918",
+      "parentId": "fld_4a31afa1f07647a495d38b89530d8e26",
+      "modified": 1653957482766,
+      "created": 1653767263251,
+      "name": "Dvd",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1653957469006,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_b12e99cdf38b4ac79982b6b7e3b7d37f",
+      "parentId": "fld_33b9dbcb63204b2c9f74df27c50d3918",
+      "modified": 1654164891162,
+      "created": 1653833888277,
+      "url": "{{ baseUrlKenzieBuster }}/dvds",
+      "name": "Get all dvds",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1653454644644.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_01cfdd54b6724bd282c86c091c1058b6",
+      "parentId": "fld_5a8898e0498c496f87d28d7d8f377dcd",
+      "modified": 1654198185667,
+      "created": 1654112300328,
+      "url": "{{ baseUrlKenzieBuster }}/carts",
+      "name": "Get all carts",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{% response 'body', 'req_770016e832a0402a9faedb421bfe6bc6', 'b64::JC50b2tlbg==::46b', 'never', 60 %}"
+      },
+      "metaSortKey": -1654112300328,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_5a8898e0498c496f87d28d7d8f377dcd",
+      "parentId": "fld_4a31afa1f07647a495d38b89530d8e26",
+      "modified": 1653957468981,
+      "created": 1653957468981,
+      "name": "Cart",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1653957468981,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_f776487ab9ff4d2fbbcc61b4c3c33d3c",
+      "parentId": "fld_5a8898e0498c496f87d28d7d8f377dcd",
+      "modified": 1654199165343,
+      "created": 1653834592753,
+      "url": "{{ baseUrlKenzieBuster }}/dvds/buy/435fb343-9294-42d0-8749-c6afe26ef931",
+      "name": "Add DVD in cart",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"quantity\": 5\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_123ea4c5f44e4f1a9475dc70b0e72d9e"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{% response 'body', 'req_770016e832a0402a9faedb421bfe6bc6', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+        "disabled": false
+      },
+      "metaSortKey": -1653387641663.25,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_73e8aaee9cc542bab839c83860ffcc4e",
+      "parentId": "fld_5a8898e0498c496f87d28d7d8f377dcd",
+      "modified": 1654207774164,
+      "created": 1654048345275,
+      "url": "{{ baseUrlKenzieBuster }}/carts/pay",
+      "name": "Pay cart",
+      "description": "",
+      "method": "PUT",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{% response 'body', 'req_770016e832a0402a9faedb421bfe6bc6', 'b64::JC50b2tlbg==::46b', 'never', 60 %}",
+        "disabled": false
+      },
+      "metaSortKey": -1653354140197.625,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_a9826766cd592bea545ef031fd2a3982cf7eab52",
+      "parentId": "wrk_061c29b665c24959a899c2eebccf9c66",
+      "modified": 1653076550921,
+      "created": 1652479927278,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": {},
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1652479927278,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_a9826766cd592bea545ef031fd2a3982cf7eab52",
+      "parentId": "wrk_061c29b665c24959a899c2eebccf9c66",
+      "modified": 1652479927279,
+      "created": 1652479927279,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_2e80637b6a914e0a832a77cb74d43b4f",
+      "parentId": "wrk_061c29b665c24959a899c2eebccf9c66",
+      "modified": 1652479927266,
+      "created": 1652479927266,
+      "fileName": "Q4",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_affa77b7b9f84b1cb3e821f2efc6aa8e",
+      "parentId": "env_a9826766cd592bea545ef031fd2a3982cf7eab52",
+      "modified": 1654167224341,
+      "created": 1653076552650,
+      "name": "Localhost",
+      "data": { "baseUrlKenzieBuster": "http://localhost:3000/api/v1" },
+      "dataPropertyOrder": { "&": ["baseUrlKenzieBuster"] },
+      "color": "#ff0000",
+      "isPrivate": false,
+      "metaSortKey": 1653076552650,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_6d55d72bbb564368abf292e1f7823cb4",
+      "parentId": "env_a9826766cd592bea545ef031fd2a3982cf7eab52",
+      "modified": 1654171048387,
+      "created": 1654118691913,
+      "name": "Production",
+      "data": {
+        "baseUrlKenzieBuster": "https://entrega-kenzie-buster.herokuapp.com/api"
+      },
+      "dataPropertyOrder": { "&": ["baseUrlKenzieBuster"] },
+      "color": "#0033ff",
+      "isPrivate": false,
+      "metaSortKey": 1654118691913,
+      "_type": "environment"
+    }
+  ]
+}
