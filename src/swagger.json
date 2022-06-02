@@ -1,0 +1,166 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kenzie Buster API",
+    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster",
+    "version": "v1"
+  },
+  "servers": [
+    {
+      "url": "https://entrega-kenzie-buster.herokuapp.com/api/vi",
+      "description": "API de produção"
+    },
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "API de desenvolvimento"
+    }
+  ],
+  "paths": {
+    "/users/login": {
+      "post": {
+        "summary": "Login de usuários",
+        "description": "Rota para login de usuários admins e não admins",
+        "tags": ["Login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              },
+              "examples": {
+                "kenzie": {
+                  "value": {
+                    "email": "kenzie@mail.com",
+                    "password": "kenzinho"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Credenciais inválidas ou não enviadas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "onOf": [
+                    {
+                      "$ref": "#/components/schemas/InvalidCredentials"
+                    },
+                    {
+                      "$ref": "#/components/schemas/EmptyBody"
+                    }
+                  ]
+                },
+                "examples": {
+                  "credenciais_invalidas": {
+                    "value": {
+                      "message": "Invalid email or password"
+                    }
+                  },
+                  "credenciais_nao_enviadas": {
+                    "value": {
+                      "error": [
+                        "email is a required field",
+                        "password is a required field"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                },
+                "examples": {
+                  "kenzie": {
+                    "value": {
+                      "user": {
+                        "isAdmin": false,
+                        "email": "kenzie@kenzie.com",
+                        "name": "Kenzie",
+                        "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJrZW56aWVAa2VuemllLmNvbSIsIm5hbWUiOiJLZW56aWUiLCJpZCI6ImFkZDE0ZjhlLWMzZTktNDYyMS1hZDEzLTY1MmVmOGM4NTgyNCIsImlhdCI6MTY1NDE3MTM5OSwiZXhwIjoxNjU0MTc0OTk5fQ.ReiHL-qtAIEVGdS714O8U7Sn5iEE9wFmFZkhCj0_PtQ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "content": {
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "InvalidCredentials": {
+        "type": "object",
+        "properties": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "EmptyBody": {
+        "required": ["error"],
+        "properties": {
+          "type": "object",
+          "properties": {
+            "error": {
+              "schema": {
+                "type": "array",
+                "items": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
