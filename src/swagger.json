@@ -334,6 +334,56 @@
           }
         }
       }
+    },
+    "/carts": {
+      "get": {
+        "summary": "Listagem de carts",
+        "description": "Rota para listagem de todos os carts criados",
+        "tags": ["Cart"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Listagem dos carts realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartsList"
+                },
+                "examples": {
+                  "dvds": {
+                    "value": [
+                      {
+                        "id": "ef468973-05f1-4c6c-9105-fdaf3a359772",
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "stock": {
+                          "id": "3c8c9656-0c1a-4107-8ec9-58c52b60efbf",
+                          "quantity": 28,
+                          "price": 5
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta listar os carts sem estar logado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -450,6 +500,46 @@
                   "type": "number"
                 }
               }
+            }
+          }
+        }
+      },
+      "CartsList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "dvds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "number"
+                  },
+                  "duration": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "total": {
+              "type": "number"
+            },
+            "paid": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
             }
           }
         }
