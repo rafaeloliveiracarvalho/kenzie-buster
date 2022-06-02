@@ -7,10 +7,6 @@
   },
   "servers": [
     {
-      "url": "https://entrega-kenzie-buster.herokuapp.com/api/vi",
-      "description": "API de produção"
-    },
-    {
       "url": "http://localhost:3000/api/v1",
       "description": "API de desenvolvimento"
     }
@@ -201,6 +197,41 @@
           }
         }
       }
+    },
+    "/dvds": {
+      "get": {
+        "summary": "Listagem de DVDs",
+        "description": "Rota para listagem de todos os DVDs registrados",
+        "tags": ["DVD"],
+        "responses": {
+          "200": {
+            "description": "Listagem dos DVDs realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVD"
+                },
+                "examples": {
+                  "dvds": {
+                    "value": [
+                      {
+                        "id": "ef468973-05f1-4c6c-9105-fdaf3a359772",
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "stock": {
+                          "id": "3c8c9656-0c1a-4107-8ec9-58c52b60efbf",
+                          "quantity": 28,
+                          "price": 5
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -257,13 +288,44 @@
             "type": "boolean"
           }
         }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
+      },
+      "DVD": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "string"
+            },
+            "stock": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
       }
     }
   }
