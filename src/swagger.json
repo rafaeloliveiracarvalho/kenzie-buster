@@ -384,6 +384,111 @@
           }
         }
       }
+    },
+    "/dvds/buy/{id}": {
+      "post": {
+        "description": "Rota para compra de dvds.",
+        "tags": ["DVD"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identificação do DVD",
+            "required": true
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DVDBuyRequest"
+              },
+              "examples": {
+                "addCart": {
+                  "value": {
+                    "quantity": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Listagem dos carts realizada com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvds": {
+                    "value": {
+                      "dvds": [
+                        {
+                          "price": 74.99,
+                          "duration": "2h55min",
+                          "name": "avengers: ultimato",
+                          "quantity": 2,
+                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                        }
+                      ],
+                      "customer": {
+                        "isAdmin": false,
+                        "email": "rafael@mail.com",
+                        "name": "Rafael",
+                        "id": "1a703081-7146-4605-9092-9839d18854a8"
+                      },
+                      "total": 149.98,
+                      "paid": false,
+                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVDBuyRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": ["quantity is a required field"]
+                    }
+                  },
+                  "quantity_enviado_como_string": {
+                    "value": {
+                      "error": [
+                        "quantity must be a `number` type, but the final value was: `NaN` (cast from the value `\"a\"`)."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Este erro ocorre o dvd com o di indicado não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvd_nao_encontrado": {
+                    "value": {
+                      "error": "dvd not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -504,6 +609,14 @@
           }
         }
       },
+      "DVDBuyRequest": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number"
+          }
+        }
+      },
       "CartsList": {
         "type": "array",
         "items": {
@@ -541,6 +654,60 @@
             "id": {
               "type": "string"
             }
+          }
+        }
+      },
+      "AddDVDToCart": {
+        "type": "object",
+        "properties": {
+          "dvds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "number"
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "paid": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
           }
         }
       }
