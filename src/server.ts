@@ -1,6 +1,6 @@
-import app from './app';
-import { AppDataSource } from './data-source';
-import { config as dotenvConfig } from 'dotenv';
+import app from "./app";
+import AppDataSource from "./data-source";
+import { config as dotenvConfig } from "dotenv";
 
 dotenvConfig();
 
