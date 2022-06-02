@@ -1,9 +1,24 @@
-|Critérios|Avaliações|Pts|
-|-|-|-|
-|POST - api/users/register|A rota de criação de usuário está funcionando e seguindo as regras estipuladas.|3 pts|
-|POST - api/users/login|A rota de login está funcionando e seguindo as regras estipuladas.|3 pts|
-|POST - api/dvds/register|A rota de listagem de usuários está funcionando e seguindo as regras estipuladas.|3 pts|
-|GET - api/dvds|A rota de dados do usuário está funcionando e seguindo as regras estipuladas.|3 pts|
-|PUT - api/carts/pay|A rota de atualização de usuário está funcionando e seguindo as regras estipuladas.|3 pts|
-|Regra de administrador|O serviço contém um middleware que valida se o usuário que está fazendo as requisições é administrador;<br>Essa proteção deve ser utilizada em todas as rotas aonde o um usuário não admin não poderia fazer a requisição.|2 pts|
-|Deploy no Heroku|A aplicação deve estar no Heroku com TODAS as rotas funcionando.|3 pts|
+<h1 align="center"><strong>Kenzie Buster API</strong></h1>
+
+API foi criada como entrega na sprint 3, do módulo Q4 do curso de desenvolvimento full stack da [Kenzie Academy Brasil](www.kenzie.com.br). O objeto era criar uma API com funcionalidades básicas de um ecommerce de DVD's, onde é possível se cadastrar como usuário comum (compradores) ou usuários administradores (vendedores), sendo que usuários comuns podem adicionar DVD's em seu carrinho e finalizar as compras, e usuários do tipo administradores também podem incluir DVD's no banco de dados.
+
+O url base da API é https://entrega-kenzie-buster.herokuapp.com
+
+<br/>
+
+## **Principais Tecnologias Utilizadas**
+
+<hr/>
+
+- Typescript
+- Nodejs
+- Express
+- TypeORM
+- Postgres
+
+<br/>
+
+## **Endpoints**
+
+<hr/>
+Acesse https://entrega-kenzie-buster.herokuapp.com/api/v1/docs
