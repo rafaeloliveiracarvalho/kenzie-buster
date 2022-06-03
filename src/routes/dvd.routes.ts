@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { dvdController, cartController } from "../controllers";
 import {
   validateCart,
@@ -29,5 +29,9 @@ dvdRouter.post(
   validateDvd.stockIsEnough,
   cartController.addDvdInCart,
 );
+
+dvdRouter.post("/buy", (req: Request, res: Response) => {
+  res.status(400).json({ error: "DVD id is required" });
+});
 
 export default dvdRouter;

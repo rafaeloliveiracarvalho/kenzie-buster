@@ -3,10 +3,16 @@ import { ErrorHandler } from "../errors";
 import { IAddDvdInCart } from "../interfaces";
 import { cartsDvdsRepo, dvdRepo } from "../repositories";
 
+import { validate } from "uuid";
+
 class ValidadeDvd {
   ifExist = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { dvdId } = req.params;
+
+      if (!validate(dvdId)) {
+        throw new ErrorHandler(400, "DVD id format is not valid.");
+      }
 
       const foundDvd = await dvdRepo.getOneDvd({ id: dvdId });
 
