@@ -1,0 +1,765 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kenzie Buster API",
+    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster.<br><br>Fique atento aos 'cadeados' nos endpoints, isso denota rotas que podem necessitar autenticação.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://entrega-kenzie-buster.herokuapp.com/api/v1",
+      "description": "API de produção"
+    },
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "API de desenvolvimento"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Para criação de usuários comuns a chave <b>isAdmin</b> pode ser omitida ou inserida com o valor false.<br/>Já usuários do tipo admin somente podem ser criados por outros admins, ou seja, um usuário admin deve estar logado e a chave <b>isAdmin</b> deve ser inserida com o valor true.",
+        "tags": ["User"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegisterRequest"
+              },
+              "examples": {
+                "kenzie": {
+                  "value": {
+                    "name": "kenzie",
+                    "email": "kenzie@mail.com",
+                    "password": "kenzinho",
+                    "isAdmin": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRegisterRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": [
+                        "name is a required field",
+                        "email is a required field",
+                        "password is a required field"
+                      ]
+                    }
+                  },
+                  "name_nao_enviado": {
+                    "value": {
+                      "error": ["name is a required field"]
+                    }
+                  },
+                  "email_nao_enviado": {
+                    "value": {
+                      "error": ["email is a required field"]
+                    }
+                  },
+                  "password_nao_enviado": {
+                    "value": {
+                      "error": ["password is a required field"]
+                    }
+                  },
+                  "email_enviado_como_array": {
+                    "value": {
+                      "error": [
+                        "email must be a `string` type, but the final value was: `[\n  \"\\\"kenzie@mail.com\\\"\"\n]`."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta criar um usuário como admin sem token válido, ou com token de usuário não admin",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  },
+                  "sem_permissao_admin": {
+                    "value": {
+                      "error": "Missing admin permission."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Email já utilizado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "email_ja_utilizado": {
+                    "value": {
+                      "error": "Key (email)=(kenzie@kenzie.com) already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "description": "Rota para login de usuários admins e não admins",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLoginRequest"
+              },
+              "examples": {
+                "kenzie": {
+                  "value": {
+                    "email": "kenzie@mail.com",
+                    "password": "kenzinho"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, quando as credenciais são inválidas ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginRequest"
+                },
+                "examples": {
+                  "credenciais_invalidas": {
+                    "value": {
+                      "message": "Invalid email or password"
+                    }
+                  },
+                  "credenciais_nao_enviadas": {
+                    "value": {
+                      "error": [
+                        "email is a required field",
+                        "password is a required field"
+                      ]
+                    }
+                  },
+                  "email_enviado_como_array": {
+                    "value": {
+                      "error": [
+                        "email must be a `string` type, but the final value was: `[\n  \"\\\"kenzie@mail.com\\\"\"\n]`."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginResponse"
+                },
+                "examples": {
+                  "kenzie": {
+                    "value": {
+                      "user": {
+                        "isAdmin": false,
+                        "email": "kenzie@kenzie.com",
+                        "name": "Kenzie",
+                        "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJrZW56aWVAa2VuemllLmNvbSIsIm5hbWUiOiJLZW56aWUiLCJpZCI6ImFkZDE0ZjhlLWMzZTktNDYyMS1hZDEzLTY1MmVmOGM4NTgyNCIsImlhdCI6MTY1NDE3MTM5OSwiZXhwIjoxNjU0MTc0OTk5fQ.ReiHL-qtAIEVGdS714O8U7Sn5iEE9wFmFZkhCj0_PtQ"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dvds": {
+      "get": {
+        "description": "Rota para listagem de todos os DVDs registrados",
+        "tags": ["DVD"],
+        "responses": {
+          "200": {
+            "description": "Listagem dos DVDs realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVD"
+                },
+                "examples": {
+                  "dvds": {
+                    "value": [
+                      {
+                        "id": "ef468973-05f1-4c6c-9105-fdaf3a359772",
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "stock": {
+                          "id": "3c8c9656-0c1a-4107-8ec9-58c52b60efbf",
+                          "quantity": 28,
+                          "price": 5
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dvds/register": {
+      "post": {
+        "description": "Rota para registro de dvds. <br/><br/>Somente usuários admin podem registrar dvds.",
+        "tags": ["DVD"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DVDRegisterRequest"
+              },
+              "examples": {
+                "DVDS": {
+                  "value": {
+                    "dvds": [
+                      {
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "quantity": 30,
+                        "price": 5.0
+                      },
+                      {
+                        "name": "Meu Malvado Favorito",
+                        "duration": "1h45min",
+                        "quantity": 182,
+                        "price": 34.99
+                      },
+                      {
+                        "name": "Star Wars",
+                        "duration": "2h12min",
+                        "quantity": 26,
+                        "price": 155.0
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVDRegisterRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": ["dvds is a required field"]
+                    }
+                  },
+                  "info_dvd_nao_enviada": {
+                    "value": {
+                      "error": [
+                        "dvds[0].price is a required field",
+                        "dvds[1].quantity is a required field",
+                        "dvds[2].duration is a required field",
+                        "dvds[3].name is a required field"
+                      ]
+                    }
+                  },
+                  "price_enviado_como_string": {
+                    "value": {
+                      "error": [
+                        "dvds[0].price must be a `number` type, but the final value was: `NaN` (cast from the value `\"sadasd\"`)."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta um DVD sem token válido, ou com token de usuário não admin",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  },
+                  "sem_permissao_admin": {
+                    "value": {
+                      "error": "Missing admin permission."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts": {
+      "get": {
+        "description": "Rota para listagem de todos os carts criados",
+        "tags": ["Cart"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Listagem dos carts realizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartsList"
+                },
+                "examples": {
+                  "dvds": {
+                    "value": [
+                      {
+                        "id": "ef468973-05f1-4c6c-9105-fdaf3a359772",
+                        "name": "E o vento levou",
+                        "duration": "1h12min",
+                        "stock": {
+                          "id": "3c8c9656-0c1a-4107-8ec9-58c52b60efbf",
+                          "quantity": 28,
+                          "price": 5
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Este erro ocorre quando se tenta listar os carts sem estar logado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sem_token_valido": {
+                    "value": {
+                      "error": "Missing authorization token."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dvds/buy/{id}": {
+      "post": {
+        "description": "Rota para compra de dvds.",
+        "tags": ["DVD"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Identificação do DVD",
+            "required": true
+          }
+        ],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DVDBuyRequest"
+              },
+              "examples": {
+                "addCart": {
+                  "value": {
+                    "quantity": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Listagem dos carts realizada com sucesso",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvds": {
+                    "value": {
+                      "dvds": [
+                        {
+                          "price": 74.99,
+                          "duration": "2h55min",
+                          "name": "avengers: ultimato",
+                          "quantity": 2,
+                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                        }
+                      ],
+                      "customer": {
+                        "isAdmin": false,
+                        "email": "rafael@mail.com",
+                        "name": "Rafael",
+                        "id": "1a703081-7146-4605-9092-9839d18854a8"
+                      },
+                      "total": 149.98,
+                      "paid": false,
+                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Este erro ocorre quando algum campo necessário não é enviado no body da requisição, ou o tipo de dado de algum campo é diferente do esperado, veja o schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DVDBuyRequest"
+                },
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": ["quantity is a required field"]
+                    }
+                  },
+                  "quantity_enviado_como_string": {
+                    "value": {
+                      "error": [
+                        "quantity must be a `number` type, but the final value was: `NaN` (cast from the value `\"a\"`)."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Este erro ocorre o dvd com o di indicado não é encontrado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvd_nao_encontrado": {
+                    "value": {
+                      "error": "dvd not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/pay": {
+      "put": {
+        "description": "Rota para pagamento.",
+        "tags": ["Cart"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Pagamento realizado com sucesso.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "dvds": {
+                    "value": {
+                      "dvds": [
+                        {
+                          "price": 74.99,
+                          "duration": "2h55min",
+                          "name": "avengers: ultimato",
+                          "quantity": 2,
+                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                        }
+                      ],
+                      "customer": {
+                        "isAdmin": false,
+                        "email": "rafael@mail.com",
+                        "name": "Rafael",
+                        "id": "1a703081-7146-4605-9092-9839d18854a8"
+                      },
+                      "total": 149.98,
+                      "paid": false,
+                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Este erro ocorre quando não existem cart com pagamento pendente.",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "nenhum_campo_enviado": {
+                    "value": {
+                      "error": "There is not cart to pay"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "UserLoginRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "content": {
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "UserRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "DVD": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "duration": {
+              "type": "string"
+            },
+            "stock": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DVDRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "dvds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "price": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DVDBuyRequest": {
+        "type": "object",
+        "properties": {
+          "quantity": {
+            "type": "number"
+          }
+        }
+      },
+      "CartsList": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "dvds": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "price": {
+                    "type": "number"
+                  },
+                  "duration": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "number"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "total": {
+              "type": "number"
+            },
+            "paid": {
+              "type": "boolean"
+            },
+            "id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AddDVDToCart": {
+        "type": "object",
+        "properties": {
+          "dvds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "number"
+                },
+                "duration": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "isAdmin": {
+                "type": "boolean"
+              },
+              "email": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              }
+            }
+          },
+          "total": {
+            "type": "number"
+          },
+          "paid": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
