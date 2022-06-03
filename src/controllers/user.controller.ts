@@ -5,7 +5,7 @@ class UserController {
   create = async (req: Request, res: Response) => {
     const newUser = await userService.createUser(req);
 
-    res.status(200).json(newUser);
+    res.status(201).json(newUser);
   };
 
   login = async (req: Request, res: Response) => {
