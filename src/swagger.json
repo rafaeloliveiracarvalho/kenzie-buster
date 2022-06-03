@@ -524,6 +524,16 @@
                         "quantity must be a `number` type, but the final value was: `NaN` (cast from the value `\"a\"`)."
                       ]
                     }
+                  },
+                  "id_dvd_nao_enviado": {
+                    "value": {
+                      "error": "DVD id is required"
+                    }
+                  },
+                  "id_dvd_invalido": {
+                    "value": {
+                      "error": "DVD id format is not valid."
+                    }
                   }
                 }
               }
