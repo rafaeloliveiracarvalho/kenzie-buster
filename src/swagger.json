@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Kenzie Buster API",
-    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster.",
+    "description": "Está documentação visa esclarecer o uso dos endpoints da API Kenzie buster.<br><br>Fique atento aos 'cadeados' nos endpoints, isso denota rotas que podem necessitar autenticação.",
     "version": "1.0.0"
   },
   "servers": [
@@ -18,7 +18,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Somente usuários admin podem criar outros admins.",
+        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Para criação de usuários comuns a chave <b>isAdmin</b> pode ser omitida ou inserida com o valor false.<br/>Já usuários do tipo admin somente podem ser criados por outros admins, ou seja, um usuário admin deve estar logado e a chave <b>isAdmin</b> deve ser inserida com o valor true.",
         "tags": ["User"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
