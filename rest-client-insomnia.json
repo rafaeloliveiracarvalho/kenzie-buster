@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2022-06-02T22:20:17.351Z",
+  "__export_date": "2022-06-03T20:39:47.858Z",
   "__export_source": "insomnia.desktop.app:v2022.3.0",
   "resources": [
     {
@@ -15,7 +15,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"rafael@mail.com\",\n\t\"password\": \"123456\"\n}"
+        "text": "{\n\t\"email\": \"kenzie@mail.com\",\n\t\"password\": \"123456\"\n}"
       },
       "parameters": [],
       "headers": [
@@ -105,7 +105,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"Kenzie\",\n\t\"email\": \"kenzie@kenzie.com\",\n\t\"password\": [\"kenzinho\"],\n\t\"isAdmin\": false\n}\n\n"
+        "text": "{\n\t\"name\": \"Kenzie\",\n\t\"email\": \"kenzie@kenzie.com\",\n\t\"password\": \"kenzinho\",\n\t\"isAdmin\": false\n}\n\n"
       },
       "parameters": [],
       "headers": [
@@ -278,7 +278,7 @@
     {
       "_id": "req_73e8aaee9cc542bab839c83860ffcc4e",
       "parentId": "fld_5a8898e0498c496f87d28d7d8f377dcd",
-      "modified": 1654207774164,
+      "modified": 1654288758692,
       "created": 1654048345275,
       "url": "{{ baseUrlKenzieBuster }}/carts/pay",
       "name": "Pay cart",
@@ -337,7 +337,7 @@
     {
       "_id": "env_affa77b7b9f84b1cb3e821f2efc6aa8e",
       "parentId": "env_a9826766cd592bea545ef031fd2a3982cf7eab52",
-      "modified": 1654167224341,
+      "modified": 1654208987898,
       "created": 1653076552650,
       "name": "Localhost",
       "data": { "baseUrlKenzieBuster": "http://localhost:3000/api/v1" },
@@ -350,11 +350,11 @@
     {
       "_id": "env_6d55d72bbb564368abf292e1f7823cb4",
       "parentId": "env_a9826766cd592bea545ef031fd2a3982cf7eab52",
-      "modified": 1654171048387,
+      "modified": 1654208990101,
       "created": 1654118691913,
       "name": "Production",
       "data": {
-        "baseUrlKenzieBuster": "https://entrega-kenzie-buster.herokuapp.com/api"
+        "baseUrlKenzieBuster": "https://entrega-kenzie-buster.herokuapp.com/api/v1"
       },
       "dataPropertyOrder": { "&": ["baseUrlKenzieBuster"] },
       "color": "#0033ff",

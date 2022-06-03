@@ -116,6 +116,29 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": "Registro de usuário realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserLoginResponse"
+                },
+                "examples": {
+                  "kenzie": {
+                    "value": {
+                      "user": {
+                        "isAdmin": false,
+                        "email": "kenzie@kenzie.com",
+                        "name": "Kenzie",
+                        "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
+                      },
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJrZW56aWVAa2VuemllLmNvbSIsIm5hbWUiOiJLZW56aWUiLCJpZCI6ImFkZDE0ZjhlLWMzZTktNDYyMS1hZDEzLTY1MmVmOGM4NTgyNCIsImlhdCI6MTY1NDE3MTM5OSwiZXhwIjoxNjU0MTc0OTk5fQ.ReiHL-qtAIEVGdS714O8U7Sn5iEE9wFmFZkhCj0_PtQ"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -327,6 +350,44 @@
                 }
               }
             }
+          },
+          "201": {
+            "description": "Registro de DVD's realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DvdRegisterResponse"
+                },
+                "examples": {
+                  "kenzie": {
+                    "value": {
+                      "dvds": [
+                        {
+                          "id": "deb6e1c2-b210-4d6b-9680-7dcc12e7069b",
+                          "name": "E o vento levou",
+                          "duration": "1h12min",
+                          "stock": {
+                            "id": "b7cf1d14-572a-402b-882e-ae1b244bda32",
+                            "quantity": 30,
+                            "price": 5
+                          }
+                        },
+                        {
+                          "id": "962acc06-e028-4d26-a030-7470841f27b7",
+                          "name": "Meu Malvado Favorito",
+                          "duration": "1h45min",
+                          "stock": {
+                            "id": "7e4fb995-37c0-439f-9df0-60724377d98f",
+                            "quantity": 182,
+                            "price": 34.99
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -487,7 +548,7 @@
     },
     "/carts/pay": {
       "put": {
-        "description": "Rota para pagamento.",
+        "description": "Rota para pagamento.<br>Esta rota sempre pagará o cart que não estiver pago.",
         "tags": ["Cart"],
         "security": [{ "bearerAuth": [] }],
         "responses": {
@@ -595,6 +656,23 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          },
+          "isAdmin": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserRegisterResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
             "type": "string"
           },
           "isAdmin": {
