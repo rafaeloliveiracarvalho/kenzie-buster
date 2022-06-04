@@ -40,3 +40,9 @@ Acesse https://entrega-kenzie-buster.herokuapp.com/api/v1/docs
 6. Execute o script "migration:run" para que sejam criadas as tabelas no banco de dados
 7. Execute o script "dev" para iniciar o servidor
 8. Para acessar a documentação dos endpoints localmente utilize a url http://localhost:3000/api/v1/docs e troque o server para local
+
+<br/>
+
+## **Utilizando a API localmente**
+
+<hr/>
