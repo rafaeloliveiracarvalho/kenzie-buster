@@ -64,8 +64,12 @@ class CartService {
     const products = await cartsDvdsRepo.getDvdsInCart(updatedCart);
 
     const response = {
-      ...updatedCart,
-      dvds: [...products],
+      cart: [
+        {
+          ...updatedCart,
+          dvds: [...products],
+        },
+      ],
     };
 
     return serializedCartSchema.validate(response, { stripUnknown: true });

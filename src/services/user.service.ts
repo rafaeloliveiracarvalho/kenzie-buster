@@ -44,7 +44,7 @@ class UserService {
 
     return {
       status: 200,
-      message: { user, token },
+      message: { token },
     };
   };
 }

@@ -121,19 +121,13 @@
             "description": "Registro de usuário realizado com sucesso",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserLoginResponse"
-                },
                 "examples": {
-                  "kenzie": {
+                  "login_com_sucesso": {
                     "value": {
-                      "user": {
-                        "isAdmin": false,
-                        "email": "kenzie@kenzie.com",
-                        "name": "Kenzie",
-                        "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
-                      },
-                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJrZW56aWVAa2VuemllLmNvbSIsIm5hbWUiOiJLZW56aWUiLCJpZCI6ImFkZDE0ZjhlLWMzZTktNDYyMS1hZDEzLTY1MmVmOGM4NTgyNCIsImlhdCI6MTY1NDE3MTM5OSwiZXhwIjoxNjU0MTc0OTk5fQ.ReiHL-qtAIEVGdS714O8U7Sn5iEE9wFmFZkhCj0_PtQ"
+                      "isAdmin": false,
+                      "email": "kenzie@kenzie.com",
+                      "name": "Kenzie",
+                      "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
                     }
                   }
                 }
@@ -201,18 +195,9 @@
             "description": "Login realizado com sucesso",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserLoginResponse"
-                },
                 "examples": {
                   "kenzie": {
                     "value": {
-                      "user": {
-                        "isAdmin": false,
-                        "email": "kenzie@kenzie.com",
-                        "name": "Kenzie",
-                        "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
-                      },
                       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwiZW1haWwiOiJrZW56aWVAa2VuemllLmNvbSIsIm5hbWUiOiJLZW56aWUiLCJpZCI6ImFkZDE0ZjhlLWMzZTktNDYyMS1hZDEzLTY1MmVmOGM4NTgyNCIsImlhdCI6MTY1NDE3MTM5OSwiZXhwIjoxNjU0MTc0OTk5fQ.ReiHL-qtAIEVGdS714O8U7Sn5iEE9wFmFZkhCj0_PtQ"
                     }
                   }
@@ -355,9 +340,6 @@
             "description": "Registro de DVD's realizado com sucesso",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DvdRegisterResponse"
-                },
                 "examples": {
                   "kenzie": {
                     "value": {
@@ -409,14 +391,18 @@
                   "dvds": {
                     "value": [
                       {
-                        "id": "ef468973-05f1-4c6c-9105-fdaf3a359772",
-                        "name": "E o vento levou",
-                        "duration": "1h12min",
-                        "stock": {
-                          "id": "3c8c9656-0c1a-4107-8ec9-58c52b60efbf",
-                          "quantity": 28,
-                          "price": 5
-                        }
+                        "dvds": [
+                          {
+                            "price": 34.99,
+                            "duration": "1h45min",
+                            "name": "Meu Malvado Favorito",
+                            "quantity": 5,
+                            "id": "51197ffa-7f5b-47c7-94d8-ba4e80d40155"
+                          }
+                        ],
+                        "total": 174.95,
+                        "paid": true,
+                        "id": "fa017da9-df51-4f4c-a1c8-8d5441344f5d"
                       }
                     ]
                   }
@@ -481,24 +467,22 @@
                 "examples": {
                   "dvds": {
                     "value": {
-                      "dvds": [
+                      "cart": [
                         {
-                          "price": 74.99,
-                          "duration": "2h55min",
-                          "name": "avengers: ultimato",
-                          "quantity": 2,
-                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                          "dvds": [
+                            {
+                              "price": 5,
+                              "duration": "1h12min",
+                              "name": "Minios",
+                              "quantity": 15,
+                              "id": "26277348-0709-4543-9a71-9134ba11121c"
+                            }
+                          ],
+                          "total": 75,
+                          "paid": false,
+                          "id": "7216aad8-e70a-48d1-9e00-765513ab4a04"
                         }
-                      ],
-                      "customer": {
-                        "isAdmin": false,
-                        "email": "rafael@mail.com",
-                        "name": "Rafael",
-                        "id": "1a703081-7146-4605-9092-9839d18854a8"
-                      },
-                      "total": 149.98,
-                      "paid": false,
-                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                      ]
                     }
                   }
                 }
@@ -523,6 +507,16 @@
                       "error": [
                         "quantity must be a `number` type, but the final value was: `NaN` (cast from the value `\"a\"`)."
                       ]
+                    }
+                  },
+                  "id_dvd_nao_enviado": {
+                    "value": {
+                      "error": "DVD id is required"
+                    }
+                  },
+                  "id_dvd_invalido": {
+                    "value": {
+                      "error": "DVD id format is not valid."
                     }
                   }
                 }
@@ -559,24 +553,29 @@
                 "examples": {
                   "dvds": {
                     "value": {
-                      "dvds": [
+                      "cart": [
                         {
-                          "price": 74.99,
-                          "duration": "2h55min",
-                          "name": "avengers: ultimato",
-                          "quantity": 2,
-                          "id": "335fb343-9294-42d0-8749-c6afe26ef931"
+                          "dvds": [
+                            {
+                              "price": 5,
+                              "duration": "1h12min",
+                              "name": "Minios",
+                              "quantity": 15,
+                              "id": "26277348-0709-4543-9a71-9134ba11121c"
+                            },
+                            {
+                              "price": 5,
+                              "duration": "1h12min",
+                              "name": "E o vento levou",
+                              "quantity": 5,
+                              "id": "ef468973-05f1-4c6c-9105-fdaf3a359772"
+                            }
+                          ],
+                          "total": 100,
+                          "paid": true,
+                          "id": "7216aad8-e70a-48d1-9e00-765513ab4a04"
                         }
-                      ],
-                      "customer": {
-                        "isAdmin": false,
-                        "email": "rafael@mail.com",
-                        "name": "Rafael",
-                        "id": "1a703081-7146-4605-9092-9839d18854a8"
-                      },
-                      "total": 149.98,
-                      "paid": false,
-                      "id": "2a25627f-233e-43c1-8ca5-a269bcfc32c4"
+                      ]
                     }
                   }
                 }
@@ -666,16 +665,7 @@
       "UserRegisterResponse": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "isAdmin": {
+          "token": {
             "type": "boolean"
           }
         }
