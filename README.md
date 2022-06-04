@@ -43,6 +43,7 @@ Acesse https://entrega-kenzie-buster.herokuapp.com/api/v1/docs
 
 <br/>
 
-## **Utilizando a API localmente**
+## **Rest Client Insomnia**
 
 <hr/>
+Caso utilize opte por utilizar o Insomnia como rest client favor utilizar o arquivo rest-client-insomnia.json para importar os endpoints.
