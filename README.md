@@ -21,7 +21,7 @@ O url base da API é https://entrega-kenzie-buster.herokuapp.com
 ## **Endpoints**
 
 <hr/>
-Acesse https://entrega-kenzie-buster.herokuapp.com/api/v1/docs
+Acesse https://entrega-kenzie-buster.herokuapp.com/api/docs
 
 <br/>
 
@@ -39,7 +39,7 @@ Acesse https://entrega-kenzie-buster.herokuapp.com/api/v1/docs
    2. Utilize yarn ou yarn install caso prefira yarn como gerenciador de pacotes
 6. Execute o script "migration:run" para que sejam criadas as tabelas no banco de dados
 7. Execute o script "dev" para iniciar o servidor
-8. Para acessar a documentação dos endpoints localmente utilize a url http://localhost:3000/api/v1/docs e troque o server para local
+8. Para acessar a documentação dos endpoints localmente utilize a url http://localhost:3000/api/docs e troque o server para local
 
 <br/>
 
