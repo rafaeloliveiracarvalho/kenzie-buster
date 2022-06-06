@@ -5,10 +5,10 @@ import userRouter from "./user.routes";
 import docRouter from "./doc.routes";
 
 const registerRoutes = (app: Express) => {
-  app.use("/api/v1/users", userRouter);
-  app.use("/api/v1/dvds", dvdRouter);
-  app.use("/api/v1/carts", cartRouter);
-  app.use("/api/v1/docs", docRouter);
+  app.use("/api/users", userRouter);
+  app.use("/api/dvds", dvdRouter);
+  app.use("/api/carts", cartRouter);
+  app.use("/api/docs", docRouter);
 };
 
 export default registerRoutes;
