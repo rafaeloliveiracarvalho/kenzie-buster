@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://entrega-kenzie-buster.herokuapp.com/api/v1",
+      "url": "https://entrega-kenzie-buster.herokuapp.com/api",
       "description": "API de produção"
     },
     {
-      "url": "http://localhost:3000/api/v1",
+      "url": "http://localhost:3000/api",
       "description": "API de desenvolvimento"
     }
   ],
