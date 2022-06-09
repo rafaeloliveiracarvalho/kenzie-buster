@@ -10,12 +10,12 @@ class ValidateUserPermission {
     }
 
     this.validateToken(req, res);
-    this.loggedUserisAdm(req, res);
+    this.loggedUserIsAdm(req, res);
 
     return next();
   };
 
-  loggedUserisAdm = (
+  loggedUserIsAdm = (
     req: Request,
     _: Response,
     next: NextFunction | null = null,

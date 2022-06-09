@@ -14,7 +14,7 @@ dvdRouter.post(
   "/register",
   validateSchema(createDvdSchema),
   validateUserPermission.validateToken,
-  validateUserPermission.loggedUserisAdm,
+  validateUserPermission.loggedUserIsAdm,
   dvdController.createDvd,
 );
 
