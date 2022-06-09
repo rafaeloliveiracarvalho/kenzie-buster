@@ -17,7 +17,7 @@ export class User {
   password: string;
 
   @Column({ type: "boolean", default: false, name: "is_admin" })
-  isAdmin?: boolean;
+  isAdm?: boolean;
 
   @OneToMany(() => Cart, (cart) => cart.customer)
   carts?: Cart[];

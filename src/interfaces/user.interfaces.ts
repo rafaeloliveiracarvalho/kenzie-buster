@@ -9,7 +9,7 @@ interface IUserWOP {
   id: string;
   name: string;
   email: string;
-  isAdmin: boolean;
+  isAdm: boolean;
 }
 
 interface IUserDecoded extends IUserWOP {

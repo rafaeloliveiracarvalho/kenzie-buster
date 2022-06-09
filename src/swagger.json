@@ -18,7 +18,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Para criação de usuários comuns a chave <b>isAdmin</b> pode ser omitida ou inserida com o valor false.<br/>Já usuários do tipo admin somente podem ser criados por outros admins, ou seja, um usuário admin deve estar logado e a chave <b>isAdmin</b> deve ser inserida com o valor true.",
+        "description": "Rota para registro de usuários admins e não admins. <br/><br/>Para criação de usuários comuns a chave <b>isAdm</b> pode ser omitida ou inserida com o valor false.<br/>Já usuários do tipo admin somente podem ser criados por outros admins, ou seja, um usuário admin deve estar logado e a chave <b>isAdm</b> deve ser inserida com o valor true.",
         "tags": ["User"],
         "security": [{ "bearerAuth": [] }],
         "requestBody": {
@@ -33,7 +33,7 @@
                     "name": "kenzie",
                     "email": "kenzie@mail.com",
                     "password": "kenzinho",
-                    "isAdmin": false
+                    "isAdm": false
                   }
                 }
               }
@@ -124,7 +124,7 @@
                 "examples": {
                   "login_com_sucesso": {
                     "value": {
-                      "isAdmin": false,
+                      "isAdm": false,
                       "email": "kenzie@kenzie.com",
                       "name": "Kenzie",
                       "id": "add14f8e-c3e9-4621-ad13-652ef8c85824"
@@ -626,7 +626,7 @@
           "user": {
             "type": "object",
             "content": {
-              "isAdmin": {
+              "isAdm": {
                 "type": "boolean"
               },
               "email": {
@@ -657,7 +657,7 @@
           "password": {
             "type": "string"
           },
-          "isAdmin": {
+          "isAdm": {
             "type": "boolean"
           }
         }
@@ -803,7 +803,7 @@
           "customer": {
             "type": "object",
             "properties": {
-              "isAdmin": {
+              "isAdm": {
                 "type": "boolean"
               },
               "email": {

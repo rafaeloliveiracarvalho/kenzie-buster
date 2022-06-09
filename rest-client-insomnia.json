@@ -105,7 +105,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"name\": \"Kenzie\",\n\t\"email\": \"kenzie@kenzie.com\",\n\t\"password\": \"kenzinho\",\n\t\"isAdmin\": false\n}\n\n"
+        "text": "{\n\t\"name\": \"Kenzie\",\n\t\"email\": \"kenzie@kenzie.com\",\n\t\"password\": \"kenzinho\",\n\t\"isAdm\": false\n}\n\n"
       },
       "parameters": [],
       "headers": [

@@ -5,22 +5,22 @@ import { ErrorHandler } from "../errors";
 
 class ValidateUserPermission {
   toCreateAdminUser = (req: Request, res: Response, next: NextFunction) => {
-    if (!(req.validated as User).isAdmin) {
+    if (!(req.validated as User).isAdm) {
       return next();
     }
 
     this.validateToken(req, res);
-    this.loggedUserIsAdmin(req, res);
+    this.loggedUserIsAdm(req, res);
 
     return next();
   };
 
-  loggedUserIsAdmin = (
+  loggedUserIsAdm = (
     req: Request,
     _: Response,
     next: NextFunction | null = null,
   ) => {
-    if (!req.decoded.isAdmin) {
+    if (!req.decoded.isAdm) {
       throw new ErrorHandler(401, "Missing admin permission.");
     }
 
